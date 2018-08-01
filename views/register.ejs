@@ -1,0 +1,42 @@
+<% include ./partials/header %>
+ <div class="row">
+    <h1 class="signup-header">Sign Up</h1>
+    <div class="signup-form">
+        <form action="/register" method="post">
+            <div class="form-group">
+                <label class="label-control" for="avatar">Avatar:</label>
+                <input  class="form-control" id="avatar" type="text" name="avatar" placeholder="avatar">
+            </div>
+            <div class="form-group">
+                <label class="label-control" for="firstName">First Name:</label>
+                <input  class="form-control input" id="firstName" type="text" name="firstName" placeholder="first Name">
+            </div>
+            <div class="form-group">
+                <label class="label-control" for="lasttName">Last Name:</label>
+                <input  class="form-control input" id="lastName" type="text" name="lastName" placeholder="Last Name">
+            </div>
+            <div class="form-group">
+                <label class="label-control" for="email">Email:</label>
+                <input class="form-control" id="email" type="email" name="email" placeholder="Your Email">
+            </div>
+            <div class="form-group">
+                <label class="label-control" for="username">Username:</label>
+                <input class="form-control" id="username" type="text" name="username" placeholder="username">
+            </div>
+            <div class="form-group">
+                <label class="label-control" for="password">Password:</label>
+                <input class="form-control" id="password" type="password" name="password" placeholder="password">
+            </div>
+            <div class="form-group">
+                <label class="label-control" for="admin">Administrator:</label>
+                <input  class="form-control input" id="admin" type="text" name="admin" placeholder="admin code">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block">Sign Up!</button>
+            </div>
+        </form>
+        <a href="/campgrounds">Go Back</a>
+    </div>
+</div>
+  
+<% include ./partials/footer %>

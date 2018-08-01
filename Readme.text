@@ -1,0 +1,101 @@
+personal Statment 
+I wanted to try to create an environment mimicking a work setting 
+where I might receive UX design structure from others and need to add front-end and backend functionality,
+so I chose to use a express as my starting structure.
+
+Purpose of the App.
+Trail rating is app allow hikers to share their expriences and any rate trail. 
+
+Technologies used:
+HTML5, CSS3, Bootstrap, Express, JavaScript, node, express, google API,
+
+Design approach: 
+error driven development. I chose error driven approach to enhance my troubleshoot skills and knowledge. 
+
+TodoList
+1- create CRUT
+2-Add google API
+3- add user authentication
+4- add user Athorization 
+
+
+
+
+
+
+//create Route
+router.post('/', middleWareObj.islogin, function(req,res){
+ 
+    var name = req.body.name;
+    var image = req.body.image;
+    var difficulty = req.body.difficulty;
+    var location = req.body.location;
+    var description = req.body.description;
+    const author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+     geocoder.geocode(req.body.location, function (err, data) {
+    if (err || !data.length) {
+      req.flash('warning', 'Invalid address');
+      return res.redirect('back');
+    }
+    var lat = data[0].latitude;
+    var lng = data[0].longitude;
+    var location = data[0].formattedAddress
+    var newTrail = {
+        name:name, 
+        image:image,
+        difficulty: difficulty,
+        description:description,
+        author: author,
+        location: location,
+        lat: lat,
+        lng:lng
+    };
+    
+    Trail.create(newTrail, function(error,trails){
+        if(error){
+            req.flash("warning", "something went wrong try again")
+        }else {
+            req.flash('sucess', 'congratulation you posted trail')
+            res.redirect("/trails");
+            
+        }
+    });
+});
+});
+
+
+
+
+
+
+
+
+////updated route 
+//update route
+router.put("/:id", middleWareObj.checkCampgroundOwnership, function(req, res){
+  geocoder.geocode(req.body.trail.location,  function(err, data) {
+    if (err || !data.length) {
+        console.log(err)
+      req.flash('warning', 'Invalid address');
+      return res.redirect('/trails');
+    }
+    req.body.trail.lat = data[0].latitude;
+    req.body.trail.lng = data[0].longitude;
+    req.body.trail.location = data[0].formattedAddress;
+  
+    Trail.findByIdAndUpdate(req.params.id, req.body.trail, function(err, trail){
+        if(err){
+            req.flash("error", err.message);
+            res.redirect("back");
+        } else {
+            
+            req.flash("success","Successfully Updated!");
+            res.redirect("trials/" + req.params.id);
+        }
+    });
+  });
+});
+

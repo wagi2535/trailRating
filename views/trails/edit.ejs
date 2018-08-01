@@ -1,0 +1,24 @@
+<% include ../partials/header%>
+<div class="container">
+    <div class="row">
+        <h2 style="text-align:center;"><%=trails.name%></h2>
+        <div  id="forum"> 
+        <form class="form-group" action="/trails/<%=trails._id%>/?_method=PUT" method="POST" enctype="multipart/form-data" >
+            <label class="control-label" for="name">Name:</label>
+            <input  class="form-control" id="name" type="text" name="trail[name]" value="<%=trails.name%>">
+            <label class="control-label" for="image">Image:</label>
+            <input class="form-control"  id="image" type="file" name="image" placeholder="image" accept="image/*">
+            <label class="control-label" for="difficulty">Difficulty:</label>
+            <input class="form-control" id="difficulty" type="text" name="trail[difficulty]" value="<%=trails.difficulty%>">
+            <label class="control-label" for="location">location:</label>
+            <input  class="form-control" id="location" type="text" name="trail[location]" value="<%=trails.location%>">
+            <label class="control-label" for="description">Description:</label>
+            <textarea  id="description" class="form-control" rows="7" name="trail[description]"><%=trails.description%></textarea>
+            <button class="btn btn-primary btn-block">Submit</button>
+        </form>
+        <a href="/trails">Back</a>
+    </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>

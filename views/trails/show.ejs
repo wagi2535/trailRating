@@ -1,0 +1,83 @@
+<% include ../partials/header %>
+<div class="container">
+   <div class="row">
+      <div class="col-md-3">
+         <div class="lead"> Trail
+            <div id="map"></div>
+         </div>
+      </div>
+      <div class="col-md-9">
+         <div class="thumbnail">
+            <img class="image-responsive" src ="<%= trails.image %>">
+            <div class="caption-full">
+            <h4 class="pull-right">Rated: <%=trails.difficulty%></h4>
+            <h4> <a href="#"><%= trails.name %></h4></a>
+            <p><%=trails.description%></p>
+            <p> <em>Submitted By <a href="/users/<%=trails.author.id%>"><%=trails.author.username%> </a>, <%= moment(trails.createdAt).fromNow() %></em> </p>
+          <%if(currentUser && trails.author.id.equals(currentUser._id)|| currentUser &&currentUser.isAdmin){%>
+               <a class="btn btn-warning" href="/trails/<%=trails._id%>/edit">Edit</a>
+            <form class="delete-form" action="/trails/<%=trails._id%>?_method=delete" method="POST">
+               <button class="btn btn-danger">delete</button>
+            </form>
+            <%}%>
+            </div>
+         </div>
+         <div class="well">
+            <div class="text-right">
+              <p>
+                 <a class="btn btn-success" href="/trails/<%=trails._id%>/comments/new"> Add New Comments</a>
+              </p>    
+            </div>
+            <!--show all the comment on the trail-->
+         <% trails.comments.forEach(function(comment){ %>
+         <div class="row">
+            <div class="col-md-12">
+              <h4> <%= comment.author.username %> </h4>
+              <span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+              <p><%=comment.text%></p>
+              <%if(currentUser&&comment.author.id.equals(currentUser._id)|| currentUser &&currentUser.isAdmin){%>
+              <a class= "btn btn-xs btn-warning" href="/trails/<%= trails._id %>/comments/<%=comment._id%>/edit"> edit</a>
+              <form class="delete-form" action="/trails/<%= trails._id %>/comments/<%=comment._id%>?_method=DELETE" method="post"> 
+              <button class="btn btn-danger btn-xs">delete</button>
+              </form>
+              <%}%>
+            </div>
+         </div>
+          
+          <%})%>
+   </div>
+</div>
+
+<script>
+  function initMap() {
+    var lat = <%= trails.lat %>;
+    var lng = <%= trails.lng %>
+    var center = {lat: lat, lng: lng };
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: center,
+        scrollwheel: false
+    });
+    var contentString = `
+      <strong><%= trails.name %><br />
+      <%= trails.location %></strong>
+      <p><%= trails.description %></p>
+    `
+    var infowindow = new google.maps.InfoWindow({
+      content: contentString
+    });
+    var marker = new google.maps.Marker({
+        position: center,
+        map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAg4qVoAD-LQPHLxozsTVuCezqzSEBFB-I&callback=initMap">
+    
+</script>
+    
+
+<% include ../partials/footer %>

@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+<div class="container">
+<div class="row">
+    <div class="col-md-4">
+         <p><%= user.firstName + " " + user.lastName %></p>
+        <div class="thumbnail">
+          <img src="<%=user.avatar%>"> 
+          <div class="caption">
+              <a href="mailto:<%=user.email%><%=user.email%>"></a>
+          </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <h3> List of the trails posted by:<%=user.username%></h3>
+        <ul>
+            <% trails.forEach(function(trails){%>
+            <li> <a href="/trails/<%=trails.id%>"><%=trails.name%> </a></li>
+            <%})%>
+        </ul>
+    </div>
+</div>
+</div>
+<% include ../partials/footer %>
