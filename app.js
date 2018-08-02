@@ -22,7 +22,7 @@ const commentRoute = require("./routes/comment");
 const indexRouter = require("./routes/index");
 
 //app configuration
-const url = process.env.DATABASEURL || 'mongodb://localhost/allTrail';
+const url = process.env.DATABASEURL||'mongodb://localhost/allTrail';
 mongoose.connect(url);
 
 app.use(bodyParser.urlencoded({extended:true}));
